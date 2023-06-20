@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Masdico ViewModel</string>
+    <string name="text1">Write your name here</string>
+    <string name="btn_text1">save</string>
+</resources>
