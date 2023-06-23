@@ -8,32 +8,35 @@
     tools:context=".MainActivity"
     android:padding="16dp">
 
-    <EditText
-        android:id="@+id/et_name"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
-        android:inputType="text"
-        android:textAlignment="center"
-        android:lines="1"
-        android:hint="@string/text1"
-        android:autofillHints="" />
+        android:layout_marginBottom="16dp"
+        android:text="@string/text_timer"
+        android:textSize="20sp"
+        android:textAlignment="center"/>
 
     <TextView
-        android:id="@+id/tv_name"
+        android:id="@+id/tv_timer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text=""
-        android:textSize="20sp"
+        android:text="@string/text_timer1"
+        android:textSize="30sp"
         android:textStyle="bold"
-        tools:text="preview"
         android:textAlignment="center"/>
 
     <Button
-        android:id="@+id/btn_toast"
+        android:id="@+id/btn_start"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/btn_text1"/>
+        android:text="@string/btn_text2"/>
+
+    <Button
+        android:id="@+id/btn_stop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_text3"/>
 
 </LinearLayout>

@@ -1,8 +1,8 @@
 package my.masdico.viewmodel
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import my.masdico.viewmodel.databinding.ActivityMainBinding
 
@@ -13,18 +13,24 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mainBinding.root)
-        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
-        mainBinding.tvName.text = mainViewModel.displayName
+        subscribe()
 
-        mainBinding.btnToast.setOnClickListener {
-            Toast.makeText(this, "rotate device to see the change", Toast.LENGTH_LONG).show()
-
-            val name: String = mainBinding.etName.text.toString()
-            mainBinding.etName.setText("")
-
-            mainViewModel.changeName(name)
-            mainBinding.tvName.text = mainViewModel.displayName
+        mainBinding.btnStart.setOnClickListener {
+            mainViewModel.openTimer()
         }
+
+        mainBinding.btnStop.setOnClickListener {
+            mainViewModel.stopTimer()
+        }
+    }
+
+    private fun subscribe() {
+        val elapsedTimeObserver = Observer<Long?>{
+            val newText = this.resources.getString(R.string.text_timer2, it)
+            mainBinding.tvTimer.text = newText
+        }
+        mainViewModel.elapsedTime.observe(this, elapsedTimeObserver)
     }
 }
