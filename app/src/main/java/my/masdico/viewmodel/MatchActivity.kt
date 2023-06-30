@@ -11,7 +11,7 @@ import my.masdico.viewmodel.databinding.ActivityMatchBinding
 
 class MatchActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var matchBinding: ActivityMatchBinding
-    private lateinit var mainViewModel: MainViewModel
+    private lateinit var scoreTeamModel: MainViewModel
     companion object {
         const val TEAM_ID = "team_id"
         const val TEAM_NAME = "team_name"
@@ -21,7 +21,7 @@ class MatchActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         matchBinding = ActivityMatchBinding.inflate(layoutInflater)
         setContentView(matchBinding.root)
-        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        scoreTeamModel = ViewModelProvider(this)[MainViewModel::class.java]
 
         showMatchScore()
         matchBinding.btnReset.setOnClickListener(this)
@@ -35,9 +35,10 @@ class MatchActivity : AppCompatActivity(), View.OnClickListener {
         val bundle = intent.extras
         matchBinding.tvMatchTitle.text = getString(R.string.txt_match_title, bundle?.getString(TEAM_NAME))
         matchBinding.tvLeftTeamname.text = bundle?.getString(TEAM_NAME)
-        matchBinding.tvLeftScore.text = mainViewModel.scoreTeamA
-        matchBinding.tvRightScore.text = mainViewModel.scoreTeamB
-        supportActionBar?.title = "Today's Match"
+        matchBinding.tvLeftScore.text = scoreTeamModel.scoreTeamA
+        matchBinding.tvRightScore.text = scoreTeamModel.scoreTeamB
+        scoreTeamModel.changeTitle("Today's Match")
+        supportActionBar?.title = scoreTeamModel.displayTitle
         val position = bundle!!.getInt(TEAM_ID)
         Glide.with(this)
             .load(BasketballTeamData.listTeam[position].imgLogo)
@@ -49,25 +50,25 @@ class MatchActivity : AppCompatActivity(), View.OnClickListener {
         when (v?.id) {
             R.id.btn_reset -> {
                 Toast.makeText(this, "Reset Game", Toast.LENGTH_SHORT).show()
-                mainViewModel.resetScore()
-                matchBinding.tvLeftScore.text = mainViewModel.scoreTeamA
-                matchBinding.tvRightScore.text = mainViewModel.scoreTeamB
+                scoreTeamModel.resetScore()
+                matchBinding.tvLeftScore.text = scoreTeamModel.scoreTeamA
+                matchBinding.tvRightScore.text = scoreTeamModel.scoreTeamB
             }
             R.id.btn_left_plusthree -> {
-                mainViewModel.addScoreTeam(3,"A")
-                matchBinding.tvLeftScore.text = mainViewModel.scoreTeamA
+                scoreTeamModel.addScoreTeam(3,"A")
+                matchBinding.tvLeftScore.text = scoreTeamModel.scoreTeamA
             }
             R.id.btn_left_plustwo -> {
-                mainViewModel.addScoreTeam(2,"A")
-                matchBinding.tvLeftScore.text = mainViewModel.scoreTeamA
+                scoreTeamModel.addScoreTeam(2,"A")
+                matchBinding.tvLeftScore.text = scoreTeamModel.scoreTeamA
             }
             R.id.btn_right_plusthree -> {
-                mainViewModel.addScoreTeam(3,"B")
-                matchBinding.tvRightScore.text = mainViewModel.scoreTeamB
+                scoreTeamModel.addScoreTeam(3,"B")
+                matchBinding.tvRightScore.text = scoreTeamModel.scoreTeamB
             }
             R.id.btn_right_plustwo -> {
-                mainViewModel.addScoreTeam(2,"B")
-                matchBinding.tvRightScore.text = mainViewModel.scoreTeamB
+                scoreTeamModel.addScoreTeam(2,"B")
+                matchBinding.tvRightScore.text = scoreTeamModel.scoreTeamB
             }
         }
     }

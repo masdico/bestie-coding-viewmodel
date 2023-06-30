@@ -10,6 +10,10 @@ class MainViewModel: ViewModel() {
     val scoreTeamA: String get() = _scoreTeamA.toString()
     val scoreTeamB: String get() = _scoreTeamB.toString()
 
+    fun changeTitle(title: String){
+        _displayTitle = title
+    }
+
     fun addScoreTeam(point: Int, team: String){
         if (team == "A"){
             _scoreTeamA += point
