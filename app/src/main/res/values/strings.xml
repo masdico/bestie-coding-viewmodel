@@ -2,4 +2,12 @@
     <string name="app_name">Masdico ViewModel</string>
     <string name="text1">Write your name here</string>
     <string name="btn_text1">save</string>
+    <string name="text2">Count Match</string>
+    <string name="txt_reset">reset</string>
+    <string name="txt_plustwo">+2 points</string>
+    <string name="txt_plusthree">+3 points</string>
+    <string name="txt_zero">0</string>
+    <string name="txt_team_name">Team Name</string>
+    <string name="txt_team_garuda">Garuda Muda</string>
+    <string name="txt_match_title">%s Game</string>
 </resources>
