@@ -4,26 +4,23 @@ import androidx.lifecycle.ViewModel
 
 class MainViewModel: ViewModel() {
     private var _displayTitle: String = "NBA Match"
-    private var _scoreTeamA: Int = 0
-    private var _scoreTeamB: Int = 0
     val displayTitle: String get() = _displayTitle
-    val scoreTeamA: String get() = _scoreTeamA.toString()
-    val scoreTeamB: String get() = _scoreTeamB.toString()
+    private var _score = mutableMapOf <String,Int>()
+    val score: MutableMap<String,Int> get() = _score
 
     fun changeTitle(title: String){
         _displayTitle = title
     }
 
-    fun addScoreTeam(point: Int, team: String){
-        if (team == "A"){
-            _scoreTeamA += point
-        }else{
-            _scoreTeamB += point
-        }
+    fun addScoreTeam(point: Int, teamId: String){
+        if (_score[teamId] != null) _score.put(teamId, _score[teamId]!!.plus(point)) else _score.put(teamId, point)
+        /* merge requires minimum API level 24
+        if (_score[teamId] != null) _score.merge(teamId, point, Int::plus) else _score.put(teamId, point)
+        */
     }
 
-    fun resetScore(){
-        _scoreTeamA = 0
-        _scoreTeamB = 0
+    fun resetScore(homeId: String, allyId: String){
+        _score.remove(homeId)
+        _score.remove(allyId)
     }
 }
