@@ -1,7 +1,6 @@
 package my.masdico.viewmodel
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
@@ -9,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import my.masdico.viewmodel.databinding.ListMatchBinding
 
 
 class ListMatchAdapter(private val list: ArrayList<BasketballTeam>) : RecyclerView.Adapter<ListMatchAdapter.ListViewHolder>() {
@@ -28,16 +28,16 @@ class ListMatchAdapter(private val list: ArrayList<BasketballTeam>) : RecyclerVi
         buttonListener = listener
     }
 
-    class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var tvName: TextView = itemView.findViewById(R.id.tv_team_name)
-        var tvDetail: TextView = itemView.findViewById(R.id.tv_team_details)
-        var imgLogo: ImageView = itemView.findViewById(R.id.img_list)
-        var btnCount: Button = itemView.findViewById(R.id.btn_count)
+    class ListViewHolder(itemView: ListMatchBinding) : RecyclerView.ViewHolder(itemView.root) {
+        var tvName: TextView = itemView.tvTeamName
+        var tvDetail: TextView = itemView.tvTeamDetails
+        var imgLogo: ImageView = itemView.imgList
+        var btnCount: Button = itemView.btnCount
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.list_match, parent, false)
-        return ListViewHolder(view)
+        val binding = ListMatchBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        return ListViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
