@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.Spinner.MODE_DIALOG
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         val dropDownData = TimerData.dropDownData
         val counter = TimerData.counter
         val dropDownAdapter = ArrayAdapter(this, android.R.layout.select_dialog_item, dropDownData)
-        optionTime = mainBinding.dropdownChoice
+        optionTime = Spinner(this,MODE_DIALOG)
         optionTime.apply {
             adapter = dropDownAdapter
             gravity = Gravity.CENTER
@@ -44,6 +45,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        mainBinding.dropdownChoice.addView(optionTime)
 
         mainBinding.btnStart.setOnClickListener {
             mainViewModel.startCountDown(Integer.parseInt(mainBinding.tvTimeCountdown.text.toString()))
