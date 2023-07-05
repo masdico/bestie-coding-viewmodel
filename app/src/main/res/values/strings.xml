@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Masdico ViewModel</string>
     <string name="text1">Write your name here</string>
-    <string name="btn_text1">save</string>
+    <string name="timer_reset">0</string>
+    <string name="btn_text1">Start</string>
+    <string name="btn_text2">Stop</string>
 </resources>
