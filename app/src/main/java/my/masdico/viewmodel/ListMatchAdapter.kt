@@ -13,19 +13,11 @@ import my.masdico.viewmodel.databinding.ListMatchBinding
 
 class ListMatchAdapter(private val list: ArrayList<BasketballTeam>) : RecyclerView.Adapter<ListMatchAdapter.ListViewHolder>() {
 
-    private lateinit var itemListener: OnItemClickListener
-    private lateinit var buttonListener: OnItemClickListener
+    internal var itemListener: OnItemClickListener? = null
+    internal var buttonListener: OnItemClickListener? = null
 
     interface OnItemClickListener{
         fun onItemClicked(position: Int)
-    }
-
-    fun setOnItemClickListener(listener: OnItemClickListener){
-        itemListener = listener
-    }
-
-    fun setOnButtonClickListener(listener: OnItemClickListener){
-        buttonListener = listener
     }
 
     class ListViewHolder(itemView: ListMatchBinding) : RecyclerView.ViewHolder(itemView.root) {
@@ -50,8 +42,8 @@ class ListMatchAdapter(private val list: ArrayList<BasketballTeam>) : RecyclerVi
         holder.tvName.text = basketballTeam.name
         holder.tvDetail.text = basketballTeam.details
 
-        holder.btnCount.setOnClickListener { buttonListener.onItemClicked(position) }
-        holder.itemView.setOnClickListener { itemListener.onItemClicked(position) }
+        holder.btnCount.setOnClickListener { buttonListener?.onItemClicked(position) }
+        holder.itemView.setOnClickListener { itemListener?.onItemClicked(position) }
     }
 
     override fun getItemCount(): Int {

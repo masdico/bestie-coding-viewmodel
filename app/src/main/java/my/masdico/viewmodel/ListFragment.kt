@@ -49,7 +49,7 @@ class ListFragment : Fragment() {
         val adapter = ListMatchAdapter(listBasketballTeam)
         rvBasketballTeam.adapter = adapter
 
-        adapter.setOnItemClickListener(object : ListMatchAdapter.OnItemClickListener {
+        adapter.itemListener = object : ListMatchAdapter.OnItemClickListener {
             override fun onItemClicked(position: Int) {
                 Toast.makeText(
                     requireContext(),
@@ -57,9 +57,9 @@ class ListFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
             }
-        })
+        }
 
-        adapter.setOnButtonClickListener(object : ListMatchAdapter.OnItemClickListener {
+        adapter.buttonListener = object : ListMatchAdapter.OnItemClickListener {
             override fun onItemClicked(position: Int) {
 
                 val bundle = Bundle()
@@ -75,7 +75,7 @@ class ListFragment : Fragment() {
                     .addToBackStack(null)
                     .commit()
             }
-        })
+        }
 
 
     }
