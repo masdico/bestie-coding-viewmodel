@@ -49,8 +49,8 @@ class ListFragment : Fragment() {
         val adapter = ListMatchAdapter(listBasketballTeam)
         rvBasketballTeam.adapter = adapter
 
-        adapter.itemListener = object : ListMatchAdapter.OnItemClickListener {
-            override fun onItemClicked(position: Int) {
+        adapter.itemListener = object : (Int) -> Unit {
+            override fun invoke(position: Int) {
                 Toast.makeText(
                     requireContext(),
                     "This is the match of " + BasketballTeamData.listTeam[position].name,
