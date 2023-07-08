@@ -1,5 +1,6 @@
 package my.masdico.viewmodel
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import my.masdico.viewmodel.databinding.FragmentMatchBinding
 
+@Suppress("DEPRECATION")
 class MatchFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentMatchBinding? = null
     private val binding get() = _binding!!
@@ -21,7 +23,6 @@ class MatchFragment : Fragment(), View.OnClickListener {
     private lateinit var allyTeam: String
 
     companion object {
-        const val MATCH_CHOSEN = "match_chosen"
         const val TEAM_NAME = "team_name"
     }
 
@@ -47,20 +48,27 @@ class MatchFragment : Fragment(), View.OnClickListener {
     }
 
     private fun showMatch() {
+        homeTeam = "home"
+        allyTeam = "ally"
         sharedViewModel.changeTitle("Today's Match")
         activity?.title = sharedViewModel.displayTitle
+        val matchChosen = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+            arguments?.getParcelable(TEAM_NAME, BasketballTeam::class.java)
+        } else {
+            arguments?.getParcelable(TEAM_NAME)
+        }
 
-        if (arguments != null) {
-            when (arguments?.getInt(MATCH_CHOSEN)) {
-                0 -> {
+        if (matchChosen != null) {
+            when (matchChosen.imgLogo) {
+                R.drawable.nba_chicago_bulls -> {
                     homeTeam = "Garuda.1"
                     allyTeam = "Chicago.1"
                 }
-                1 -> {
+                R.drawable.nba_la_lakers -> {
                     homeTeam = "Garuda.2"
                     allyTeam = "Lakers.2"
                 }
-                2 -> {
+                R.drawable.nba_boston_celtics -> {
                     homeTeam = "Garuda.3"
                     allyTeam = "Celtics.3"
                 }
@@ -72,11 +80,10 @@ class MatchFragment : Fragment(), View.OnClickListener {
                 binding.tvLeftScore.text = "0"
                 binding.tvRightScore.text = "0"
             }
-            binding.tvMatchTitle.text = getString(R.string.txt_match_title, arguments?.getString(TEAM_NAME))
-            binding.tvLeftTeamname.text = arguments?.getString(TEAM_NAME)
-            val position = arguments?.getInt(MATCH_CHOSEN)!!
+            binding.tvMatchTitle.text = getString(R.string.txt_match_title, matchChosen.name)
+            binding.tvLeftTeamname.text = matchChosen.name
             Glide.with(this)
-                .load(BasketballTeamData.listTeam[position].imgLogo)
+                .load(matchChosen.imgLogo)
                 .apply(RequestOptions().override(170, 170))
                 .into(binding.imgMatchLogo)
         }

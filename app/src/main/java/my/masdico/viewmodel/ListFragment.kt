@@ -64,8 +64,7 @@ class ListFragment : Fragment() {
 
                 val bundle = Bundle()
                 val matchFragment = MatchFragment()
-                bundle.putString(MatchFragment.TEAM_NAME, BasketballTeamData.listTeam[position].name)
-                bundle.putInt(MatchFragment.MATCH_CHOSEN, position)
+                bundle.putParcelable(MatchFragment.TEAM_NAME, BasketballTeamData.listTeam[position])
                 matchFragment.arguments = bundle
 
                 val fragmentManager = parentFragmentManager
